@@ -1,0 +1,17 @@
+[ req ]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+
+[ req_distinguished_name ]
+CN = admission-webhook.admission-controllers.svc
+
+[ v3_req ]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = admission-webhook
+DNS.2 = admission-webhook.admission-controllers
+DNS.3 = admission-webhook.admission-controllers.svc

@@ -1,0 +1,29 @@
+# deployment-admission-webhook.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admission-webhook
+  namespace: admission-controllers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admission-webhook
+  template:
+    metadata:
+      labels:
+        app: admission-webhook
+    spec:
+      containers:
+      - name: admission-webhook
+        image: mohamed1780/admission-webhook:latest
+        ports:
+        - containerPort: 443
+        volumeMounts:
+        - name: webhook-certs
+          mountPath: /etc/webhook/certs
+          readOnly: true
+      volumes:
+      - name: webhook-certs
+        secret:
+          secretName: webhook-certs

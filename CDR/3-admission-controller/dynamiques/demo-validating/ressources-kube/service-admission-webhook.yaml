@@ -1,0 +1,12 @@
+# service-admission-webhook.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: admission-webhook
+  namespace: admission-controllers
+spec:
+  ports:
+  - port: 443
+    targetPort: 443
+  selector:
+    app: admission-webhook

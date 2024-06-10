@@ -1,0 +1,61 @@
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: restricted-psp
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  volumes:
+    - 'configMap'
+    - 'emptyDir'
+    - 'projected'
+    - 'secret'
+  runAsUser:
+    rule: 'MustRunAsNonRoot'
+  seLinux:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+    - min: 1
+      max: 65535
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+    - min: 1
+      max: 65535
+
+
+
+# apiVersion: policy/v1beta1
+# kind: PodSecurityPolicy
+# metadata:
+#   name: restricted-psp
+# spec:
+#   privileged: false                # Empêche l'exécution de pods en mode privilégié pour limiter l'accès aux ressources du système hôte.
+#   allowPrivilegeEscalation: false  # Empêche les processus dans les conteneurs d'acquérir des privilèges supplémentaires.
+#   requiredDropCapabilities:        # Supprime toutes les capacités supplémentaires pour réduire les privilèges des conteneurs.
+#     - ALL
+#   runAsUser:                       # Force les conteneurs à s'exécuter en tant qu'utilisateur non-root.
+#     rule: 'MustRunAsNonRoot'
+#   seLinux:                         # Permet d'exécuter les conteneurs avec n'importe quel contexte SELinux.
+#     rule: 'RunAsAny'
+#   supplementalGroups:              # Force les conteneurs à utiliser des groupes supplémentaires spécifiques.
+#     rule: 'MustRunAs'
+#     ranges:
+#       - min: 1                     # Plage des IDs de groupes supplémentaires.
+#         max: 65535
+#   fsGroup:                         # Force les conteneurs à utiliser des groupes de fichiers spécifiques.
+#     rule: 'MustRunAs'
+#     ranges:
+#       - min: 1                     # Plage des IDs de groupes de fichiers.
+#         max: 65535
+#   volumes:                         # Types de volumes que les pods peuvent utiliser.
+#     - 'configMap'                  # Permet d'utiliser les volumes de type configMap.
+#     - 'emptyDir'                   # Permet d'utiliser les volumes de type emptyDir.
+#     - 'projected'                  # Permet d'utiliser les volumes de type projected.
+#     - 'secret'                     # Permet d'utiliser les volumes de type secret.
+#     - 'downwardAPI'                # Permet d'utiliser les volumes de type downwardAPI.
+#     - 'persistentVolumeClaim'      # Permet d'utiliser les volumes de type persistentVolumeClaim.

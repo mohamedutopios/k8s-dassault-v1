@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scheduler-extender
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scheduler-extender
+  template:
+    metadata:
+      labels:
+        app: scheduler-extender
+    spec:
+      containers:
+        - name: scheduler-extender
+          image: mohamed1780/scheduler-extender:latest
+          ports:
+            - containerPort: 12345
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scheduler-extender
+  namespace: kube-system
+spec:
+  type: ClusterIP
+  ports:
+    - port: 12345
+      targetPort: 12345
+  selector:
+    app: scheduler-extender

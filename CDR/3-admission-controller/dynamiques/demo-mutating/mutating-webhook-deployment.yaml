@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mutating-webhook
+  namespace: vote
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mutating-webhook
+  template:
+    metadata:
+      labels:
+        app: mutating-webhook
+    spec:
+      containers:
+        - name: mutating-webhook
+          image: mohamed1780/mutating-webhook:latest
+          ports:
+            - containerPort: 443
+          volumeMounts:
+            - name: webhook-cert
+              mountPath: /etc/webhook/certs
+              readOnly: true
+      volumes:
+        - name: webhook-cert
+          secret:
+            secretName: mutating-webhook-certs

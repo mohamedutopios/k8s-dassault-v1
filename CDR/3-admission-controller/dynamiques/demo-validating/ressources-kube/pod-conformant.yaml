@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-conformant
+  namespace: admission-controllers
+  labels:
+    app: vote
+spec:
+  containers:
+  - name: nginx
+    image: nginx

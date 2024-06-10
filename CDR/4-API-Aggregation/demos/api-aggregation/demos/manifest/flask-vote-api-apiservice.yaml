@@ -1,0 +1,14 @@
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  name: v1.mycompany.com
+spec:
+  service:
+    name: go-vote-api
+    namespace: default
+    port: 443
+  group: mycompany.com
+  version: v1
+  insecureSkipTLSVerify: true
+  groupPriorityMinimum: 1000
+  versionPriority: 10

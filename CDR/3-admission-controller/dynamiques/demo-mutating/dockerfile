@@ -1,0 +1,18 @@
+FROM python:3.8-slim
+
+WORKDIR /app
+
+# Copier les fichiers de l'application dans le conteneur
+COPY mutate.py /app/mutate.py
+
+# Installer Flask
+RUN pip install Flask
+
+# Copier les certificats dans le conteneur
+COPY server.crt /app/server.crt
+COPY server.key /app/server.key
+
+# Exposer le port 443
+EXPOSE 443
+
+CMD ["python", "mutate.py"]

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-vote-api
+  namespace: default
+  labels:
+    app: go-vote-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-vote-api
+  template:
+    metadata:
+      labels:
+        app: go-vote-api
+    spec:
+      serviceAccountName: go-vote-api-sa
+      containers:
+        - name: server
+          image: mohamed1780/go-vote-api:latest
+          ports:
+            - containerPort: 8443
+          env:
+            - name: REDIS_URL
+              value: "redis://redis:6379"
+          volumeMounts:
+            - name: tls-certs
+              mountPath: "/tls"
+              readOnly: true
+      volumes:
+        - name: tls-certs
+          secret:
+            secretName: go-vote-api-tls
+
