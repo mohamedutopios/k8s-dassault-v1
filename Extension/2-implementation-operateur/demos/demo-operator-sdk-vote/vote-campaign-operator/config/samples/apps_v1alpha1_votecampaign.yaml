@@ -1,0 +1,12 @@
+apiVersion: apps.example.com/v1alpha1
+kind: VoteCampaign
+metadata:
+  labels:
+    app.kubernetes.io/name: votecampaign
+    app.kubernetes.io/instance: votecampaign-sample
+    app.kubernetes.io/part-of: operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: operator
+  name: votecampaign-sample
+spec:
+  # TODO(user): Add fields here

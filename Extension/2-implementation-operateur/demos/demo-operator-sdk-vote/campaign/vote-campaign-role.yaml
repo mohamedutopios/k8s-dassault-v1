@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: vote-campaign-role
+rules:
+- apiGroups: ["apps.example.com"]
+  resources: ["votecampaigns"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["apps.example.com"]
+  resources: ["votecampaigns/status"]
+  verbs: ["get", "update", "patch"]
